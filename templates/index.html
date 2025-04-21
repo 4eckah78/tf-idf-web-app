@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>td-idf</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #333; }
+        form { margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+        .file-info { margin: 10px 0; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>TF-IDF анализатор 3000</h1>
+    
+    <form action="/upload/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".txt">
+        <button type="submit">Загрузить файл</button>
+    </form>
+
+    {% if filename %}
+    <div class="file-info">файл: {{ filename }}</div>
+    {% endif %}
+
+    {% if results %}
+    <h2>50 слов по IDF</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Слово</th>
+                <th>TF</th>
+                <th>IDF</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in results %}
+            <tr>
+                <td>{{ item.word }}</td>
+                <td>{{ "%.5f"|format(item.tf) }}</td>
+                <td>{{ "%.5f"|format(item.idf) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</body>
+</html>
